@@ -1,5 +1,5 @@
 //
-//  TweetListViewController.h
+//  TweetTableViewCell.h
 //  TwitterDemo
 //
 //  Created by  Michael Lin on 1/30/17.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TweetListViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface TweetTableViewCell : UITableViewCell
 
 @end
