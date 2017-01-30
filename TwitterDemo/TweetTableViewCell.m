@@ -22,7 +22,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.nameLabel.text = @"My Twitter Name";
+    self.handleLabel.text = @"@somebody";
+    self.timestampLabel.text = @"4h";
+    self.contentLabel.text = @"A really long repeated message. A really long repeated message. A really long repeated message. A really long repeated message.";
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
