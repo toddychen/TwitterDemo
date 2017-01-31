@@ -20,6 +20,9 @@
     // Do any additional setup after loading the view from its nib.
     
     self.tableView.dataSource = self;
+    //self.tableView.rowHeight = 200;
+    self.tableView.estimatedRowHeight = 200;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     UINib *nib = [UINib nibWithNibName:@"TweetTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TweetTableViewCell"];
@@ -36,6 +39,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetTableViewCell" forIndexPath:indexPath];
+    
+    if (indexPath.row % 2) {
+        cell.retweetContainerHeightConstraint.constant = 0;
+    } else {
+        cell.retweetContainerHeightConstraint.constant = 24;
+    }
+    
+    [cell setNeedsUpdateConstraints];
+    
     return cell;
 }
 

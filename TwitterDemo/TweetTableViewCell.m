@@ -23,7 +23,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.nameLabel.text = @"My Twitter Name";
-    self.handleLabel.text = @"@somebody";
+    self.handleLabel.text = @"@somebodysomebodysomebodysomebodysomebodysomebody";
     self.timestampLabel.text = @"4h";
     self.contentLabel.text = @"A really long repeated message. A really long repeated message. A really long repeated message. A really long repeated message.";
 }
