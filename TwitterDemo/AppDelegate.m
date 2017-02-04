@@ -7,9 +7,14 @@
 //
 
 #import "AppDelegate.h"
-#import "TweetListViewController.h"
 #import "LoginViewController.h"
-
+#import "TweetListViewController.h"
+#import "TweetDetailViewController.h"
+#import "ProfileViewController.h"
+#import "ComposeViewController.h"
+#import "TwitterClient.h"
+#import "User.h"
+#import "Tweet.h"
 
 @interface AppDelegate ()
 
@@ -29,6 +34,16 @@
     
     //self.window.rootViewController = tweetListViewController;
     self.window.rootViewController = loginViewController;
+
+    
+    // For debugging
+    //TweetDetailViewController *tweetDetailViewController = [[TweetDetailViewController alloc] initWithNibName:@"TweetDetailViewController" bundle:nil];
+    //self.window.rootViewController = tweetDetailViewController;
+    //ComposeViewController *composeViewController = [[ComposeViewController alloc] initWithNibName:@"ComposeViewController" bundle:nil];
+    //self.window.rootViewController = composeViewController;
+    //ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
+    //self.window.rootViewController = profileViewController;
+    
     
     [self.window makeKeyAndVisible];
     
@@ -55,6 +70,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (bool)application:(UIApplication *)app openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    [[TwitterClient sharedInstance] openURL:url];
+    return YES;
 }
 
 @end

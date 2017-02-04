@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
+
 
 @interface TweetListViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) User *user;
 
 @end
