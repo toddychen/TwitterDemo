@@ -8,25 +8,25 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User can sign in using OAuth login flow.
-- [ ] User can view last 20 tweets from their home timeline.
-- [ ] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.  In other words, design the custom cell with the proper Auto Layout settings.  You will also need to augment the model classes.
-- [ ] User can pull to refresh.
-- [ ] User can compose a new tweet by tapping on a compose button.
-- [ ] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [X] User can sign in using OAuth login flow.
+- [X] User can view last 20 tweets from their home timeline.
+- [X] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.  In other words, design the custom cell with the proper Auto Layout settings.  You will also need to augment the model classes.
+- [X] User can pull to refresh.
+- [X] User can compose a new tweet by tapping on a compose button.
+- [X] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [ ] Hamburger menu
    - [ ] Dragging anywhere in the view should reveal the menu.
    - [ ] The menu should include links to your profile, the home timeline, and the mentions view.
-- [ ] Profile page
-   - [ ] Contains the user header view (implemented as a custom view)
-   - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Home Timeline
+- [X] Profile page
+   - [X] Contains the user header view (implemented as a custom view)
+   - [X] Contains a section with the users basic stats: # tweets, # following, # followers
+- [X] Home Timeline
    - [ ] Tapping on a user image should bring up that user's profile page
 
 The following **optional** features are implemented:
 
 - [ ] When composing, you should have a countdown in the upper right for the tweet limit.
-- [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
+- [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] Retweeting and favoriting should increment the retweet and favorite count.
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
 - [ ] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
