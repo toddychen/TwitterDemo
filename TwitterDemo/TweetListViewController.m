@@ -115,11 +115,10 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"got tweets!");
         [self.tableView.refreshControl endRefreshing];
-        self.tweets = [Tweet tweetsWithArray:responseObject];
         
         //NSLog(@"responseObject: %@", responseObject);
 
-        
+        self.tweets = [Tweet tweetsWithArray:responseObject];
         for (Tweet *tweet in self.tweets) {
             NSLog(@"my tweets, user.retweeted: %@", tweet.retweeted ? @"yes" : @"no");
         }
@@ -134,17 +133,13 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    //[self performSegueWithIdentifier:@"TweetDetailViewControllerSegue" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
-    
-    
+
     NSLog(@"In didSelectRowAtIndexPath! @%ld", indexPath.row);
     TweetDetailViewController *tweetDetailViewController= [[TweetDetailViewController alloc] initWithNibName:@"TweetDetailViewController" bundle:nil];
     tweetDetailViewController.tweet = self.tweets[indexPath.row];
-    [tweetDetailViewController reloadData];
-    
-    //[self presentViewController:tweetDetailViewController animated:YES completion:nil];
     
     [self.navigationController pushViewController:tweetDetailViewController animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 

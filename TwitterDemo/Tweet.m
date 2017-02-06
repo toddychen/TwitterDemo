@@ -14,8 +14,11 @@
     self = [super init];
     if (self) {
         self.text = dictionary[@"text"];
-        self.retweeted = dictionary[@"retweeted"] == 0 ? YES : NO;
-        self.favorited = dictionary[@"favorited"] == 0 ? YES : NO;
+        self.retweeted = [dictionary[@"retweeted"] isEqual:@1] ? YES : NO;
+        self.favorited = [dictionary[@"favorited"] isEqual:@1] ? YES : NO;
+        self.tweetId = dictionary[@"id"];
+        NSLog(@"TweetID is: %@", self.tweetId);
+        
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         NSString *createdAtString = dictionary[@"created_at"];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

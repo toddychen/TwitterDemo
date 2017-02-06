@@ -9,6 +9,8 @@
 #import "TweetTableViewCell.h"
 #import <UIImageView+AFNetworking.h>
 #import "ProfileViewController.h"
+#import "TwitterClient.h"
+#import <MBProgressHUD.h>
 
 @interface TweetTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -33,6 +35,9 @@
     retweetButtonTapped.numberOfTapsRequired = 1;
     [self.retweetButton addGestureRecognizer:retweetButtonTapped];
 
+    // reload data
+    [self reloadData];
+    
     
 }
 
@@ -64,7 +69,72 @@
 
 - (void)tapRetweetButton: (UIGestureRecognizer *)sender {
     NSLog(@"In tapRetweetButton!");
-    NSLog(@"the retweeted value is: %@", self.tweet.retweeted ? @"yes" : @"no");
+    NSLog(@"the retweeted value before tap is: %@", self.tweet.retweeted ? @"yes" : @"no");
+    
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.tweet.tweetId, @"id", nil];
+    
+    NSString *retweetURLString = [NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweet/%@.json", self.tweet.tweetId];
+    NSString *unRetweetURLString = [NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/unretweet/%@.json", self.tweet.tweetId];
+    
+    if (self.tweet.retweeted) {
+        // remove a retweet
+        [[TwitterClient sharedInstance] POST:unRetweetURLString parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+            NSLog(@"doing nothing in progress");
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"retweet removed!");
+            
+            // Show the sent message
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"Retweet Removed!";
+            hud.margin = 10.f;
+            [hud setOffset:CGPointMake(0, 150.f)];
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hideAnimated:YES afterDelay:3];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"failed to remove retweets! message: %@", error.userInfo);
+            
+            // Show the error message
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"Retweet removing Failed!";
+            hud.margin = 10.f;
+            [hud setOffset:CGPointMake(0, 150.f)];
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hideAnimated:YES afterDelay:3];
+        }];
+
+    } else {
+        // retweet a tweet
+        [[TwitterClient sharedInstance] POST:retweetURLString parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+            NSLog(@"doing nothing in progress");
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"retweet sent!");
+            
+            // Show the sent message
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"Retweet Sent!";
+            hud.margin = 10.f;
+            [hud setOffset:CGPointMake(0, 150.f)];
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hideAnimated:YES afterDelay:3];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"failed to send retweets! message: %@", error.userInfo);
+    
+            // Show the error message
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"Retweet Failed!";
+            hud.margin = 10.f;
+            [hud setOffset:CGPointMake(0, 150.f)];
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hideAnimated:YES afterDelay:3];
+        }];
+
+    }
     self.tweet.retweeted = !self.tweet.retweeted;
     [self loadRetweetImage];
     
@@ -74,10 +144,8 @@
     NSLog(@"In loadRetweetImage!");
     if (self.tweet.retweeted) {
         [self.retweetButton setImage:[UIImage imageNamed:@"iconmonstr-retweet-gloden"] forState:UIControlStateNormal];
-        //[self.retweetButton setImage:[UIImage imageNamed:@"iconmonstr-retweet-gloden"]];
     } else {
         [self.retweetButton setImage:[UIImage imageNamed:@"iconmonstr-retweet-black"] forState:UIControlStateNormal];
-        //[self.retweetButton.imageView setImage:[UIImage imageNamed:@"iconmonstr-retweet-black"]];
     }
 }
 
